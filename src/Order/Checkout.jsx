@@ -3,8 +3,10 @@ import PersonInfo from './PersonInfo.jsx'
 import Cart from '../Cart/Cart.jsx'
 import Cookies from "js-cookie"
 import { GetPersonInfo } from '../../Hooks/UseGetPersonInfo.js';
-
+import { useDispatch } from 'react-redux';
+import {addaddress,addpaymentMethod} from "../../Store/OrderSlice.js"
 const Checkout = () => {
+  const dispatch = useDispatch()
   const token =  Cookies.get('token')
   const user = Cookies.get('user')
 
@@ -25,8 +27,8 @@ const Checkout = () => {
           <h1>Addresses</h1>
           <p>Choose from Existing addresses</p>
              {         getPerson?.Address?.dataproduct?.data.map((data)=>
-            <div className='flex gap-7 mt-2 ' key={data._id}>
-                  <input type="radio" name='Address'   />
+            <div  className='flex gap-7 mt-2 ' key={data._id}>
+                  <input  onClick={()=>dispatch(addaddress(data._id))}   type="radio" name='Address'   />
                   <div>
                     <h1>{data.fullName}</h1>
                     <p>{data.street}</p>
@@ -49,11 +51,11 @@ const Checkout = () => {
           <p>Choose One</p>
            <div>
             <span className='flex mt-3'>           
-               <input type="radio" name="payment"/>
+               <input onClick={(e)=> dispatch(addpaymentMethod(e.target.value))} type="radio" value="Cash" name="payment"/>
             <p>Cash</p>
             </span>
             <span className='flex mt-2'>           
-               <input type="radio" name="payment"/>
+               <input onClick={(e)=> dispatch(addpaymentMethod(e.target.value))}  value="Card Paymen" type="radio" name="payment"/>
             <p>Card Payment</p>
             </span>
            </div>
