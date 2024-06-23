@@ -5,17 +5,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate()
+ console.log("cookies",Cookies.get('token'));
   const [login,setLogin]= useState(true)
   const email = useRef(null)
   const password = useRef(null)
   const userName = useRef(null)
-  useEffect(()=>{
-    const token = Cookies.get('token');
-    console.log('Token from cookie:', token);
-    if(token){
-      navigate('Ecom/home')
-    }
-  },[])
+  // useEffect(()=>{
+  //   const token = Cookies.get('token');
+  //   console.log('Token from cookie:', token);
+  //   if(token){
+  //     navigate('Ecom/home')
+  //   }
+  // },[])
   const handleFormSubmit = async(e)=>{
     e.preventDefault()
     if(login){
@@ -27,10 +28,12 @@ export default function Login() {
         body: JSON.stringify({
             email: email.current.value,
             password:password.current.value
-        })
+        }),
+    credentials: 'include'
+        
     };
     console.log("email",email.current.value,password.current.value);
-    await  fetchData(`/v1/user/login`,options).then((data)=>{
+    await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/login`,options).then((data)=>{
       if(data.dataproduct.sucess){
         navigate('Ecom/home')
       }
@@ -48,10 +51,11 @@ export default function Login() {
             email: email.current.value,
             password:password.current.value,
             userName:userName.current.value
-        })
+        }),
+    credentials: 'include'
     };
     console.log("email",email.current.value,password.current.value);
-    await  fetchData(`/v1/user/singup`,options).then((data)=>{
+    await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/singup`,options).then((data)=>{
       console.log("on user signup",data)
     })
     }

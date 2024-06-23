@@ -19,9 +19,10 @@ const CreateOrder = (token,user,products,orderquantity,address,paymentMethod)=>{
             address,
             paymentMethod,
             orderquantity
-        })
+        }),
+    credentials: 'include'
     }
-    fetchData("/v1/order/add",options).then((data)=>console.log("on create order sucess",data))
+    fetchData("https://mern-ecomapp-1.onrender.com/v1/order/add",options).then((data)=>console.log("on create order sucess",data))
 }
 
 export  default CreateOrder

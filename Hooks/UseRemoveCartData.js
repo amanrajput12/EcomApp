@@ -12,9 +12,10 @@ const  options ={
    body:JSON.stringify({
     product:product,
     user:user
-   })
+   }),
+    credentials: 'include'
 }
-fetchData("/v1/proudctdetail/removedata",options).then((data)=>console.log("on remove from cart",data))
+fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/removedata",options).then((data)=>console.log("on remove from cart",data))
 
 
 }

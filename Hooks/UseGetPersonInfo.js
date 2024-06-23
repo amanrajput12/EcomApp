@@ -14,10 +14,11 @@ const GetPersonInfo = (token,user)=>{
             },
             body:JSON.stringify({
                 user:user
-            })
+            }),
+     credentials: 'include'
            }
 
-            fetchData("/v1/address/get",options).then((data)=>{
+            fetchData("https://mern-ecomapp-1.onrender.com/v1/address/get",options).then((data)=>{
             console.log(" user info for get delivery",data);
         setAddress(data)
            })

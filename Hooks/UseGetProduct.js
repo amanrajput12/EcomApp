@@ -11,8 +11,9 @@ const GetProduct = (token)=>{
               'token':token
           },
          
+    credentials: 'include'
       };
-         fetchData("/v1/product/getProduct",options).then((data)=>{
+         fetchData("https://mern-ecomapp-1.onrender.com/v1/product/getProduct",options).then((data)=>{
              console.log("in useeffect",data.dataproduct.result);
              setProduct(data.dataproduct.result)
          })

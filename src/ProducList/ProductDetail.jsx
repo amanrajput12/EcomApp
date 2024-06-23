@@ -23,9 +23,10 @@ const ProductDetail = () => {
                 },
                 body: JSON.stringify({
                     id: params
-                })
+                }),
+    credentials: 'include'
             };
-             fetchData(`/v1/product/getProductDetail`,options).then((data)=>
+             fetchData(`https://mern-ecomapp-1.onrender.com/v1/product/getProductDetail`,options).then((data)=>
                 setProductDetail(data.dataproduct.data))
          },[])
 
@@ -49,10 +50,11 @@ const ProductDetail = () => {
         quantity:Number(1),
         user:user
 
-      })
+      }),
+    credentials: 'include'
        }
        
-       fetchData("/v1/proudctdetail/cart",options).then((data)=>console.log("on added to cart",data))
+       fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cart",options).then((data)=>console.log("on added to cart",data))
          }
     // console.log("in parmas",params,productDetail[0]);
   return (

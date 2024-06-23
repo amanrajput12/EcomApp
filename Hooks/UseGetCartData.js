@@ -15,9 +15,10 @@ const GetCartData = (token,user)=>{
             },
             body: JSON.stringify({
                 user: user
-            })
+            }),
+    credentials: 'include'
         }
-        fetchData("/v1/proudctdetail/cartdata",options).then((data)=>setCartData(data?.dataproduct))
+        fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartdata",options).then((data)=>setCartData(data?.dataproduct))
       
     },[])
     return  {cartData}
