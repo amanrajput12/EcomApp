@@ -55,7 +55,7 @@ const Checkout = () => {
             <p>Cash</p>
             </span>
             <span className='flex mt-2'>           
-               <input onClick={(e)=> dispatch(addpaymentMethod(e.target.value))}  value="Card Paymen" type="radio" name="payment"/>
+               <input onClick={(e)=> dispatch(addpaymentMethod(e.target.value))}  value="Card Payment" type="radio" name="payment"/>
             <p>Card Payment</p>
             </span>
            </div>

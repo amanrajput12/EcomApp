@@ -7,7 +7,7 @@ const  options ={
    method:"POST",
    headers:{
     'Content-Type':'application/json',
-    'token':token
+    'token':token 
    },
    body:JSON.stringify({
     product:product,

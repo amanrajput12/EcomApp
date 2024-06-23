@@ -11,6 +11,7 @@ import AppStore from '../Store/Store.js'
 import Ecom from './Ecom.jsx'
 import Cart from './Cart/Cart.jsx'
 import Checkout from './Order/Checkout.jsx'
+import Order from './Order/Order.jsx'
 const route = createBrowserRouter([
   {
     path:'/',
@@ -39,6 +40,10 @@ const route = createBrowserRouter([
   {
     path:'/checkout',
     element:<Checkout/>
+  },
+  {
+    path:'/orderconfirm',
+    element:<Order/>
   }
   
 ])

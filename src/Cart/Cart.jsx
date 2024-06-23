@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateOrder from '../../Hooks/UseCreateOrder.js'
+ import axios from "axios"
 
 const Cart = ({btn="Checkout"}) => {
  
@@ -22,7 +23,7 @@ const Cart = ({btn="Checkout"}) => {
   console.log("usercart data",cartdata?.cartData?.Amount);
     
   
-    const handlecart =()=>{
+    const handlecart = async()=>{
       console.log("cart click",btn);
       if(btn=="Checkout"){
         navigate('/checkout')
@@ -39,6 +40,61 @@ const Cart = ({btn="Checkout"}) => {
       quantity:data.quantity
      }))
    
+     if(!(orderdata.paymentMethod==="Cash")){
+      console.log("online payment",orderdata.paymentMethod);
+      try {
+        const orderResponse = await axios.post("/v1/payment/checkout",{
+          amount:cartdata?.cartData?.Amount,
+          cartItems:cartdata?.cartData?.data.length,
+          userShipping:orderdata.address,
+          userId:user
+        })
+        console.log("on payment respon",orderResponse);
+
+        const {orderId,amount}= orderResponse.data
+
+        var options = {
+          "key": import.meta.env.VITE_KEY, // Enter the Key ID generated from the Dashboard
+          "amount": amount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+          "currency": "INR",
+          "name": "Ecom ",
+          "description": "Test Transaction",
+         
+          "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+          "handler":async function (response){
+            const paymentData = {
+              orderId:response.razorpay_payment_id,
+              paymentId:response.razorpay_order_id,
+              signature:response.razorpay_signature,
+              amount:cartdata?.cartData?.Amount,
+              cartItems:cartdata?.cartData?.data.length,
+              userId:user,
+              userShipping:orderdata.address,
+            }
+          const api = await axios.post("/v1/payment/verify-payment",paymentData)
+
+          navigate('/orderconfirm')
+          },
+          "prefill": {
+              "name": "Aman Rajput",
+              "email": "Aman@gmail.com",
+              "contact": "9000090000"
+          },
+          "notes": {
+              "address": "Gandhinagar"
+          },
+          "theme": {
+              "color": "#3399cc"
+          }
+      };
+      var rzp = new window.Razorpay(options)
+      rzp.open()
+
+      } catch (error) {
+         console.log("error on payment",error.message);
+      }
+      return null
+     }
     console.log("Product IDs:", quantity);
    
   
