@@ -11,7 +11,8 @@ const ProductDetail = () => {
     const [imageCount,setImageCount]= useState(0)
     const token = Cookies.get('token');
     const user = Cookies.get('user');
-    console.log('Token from cookie:', token,user);
+   
+   
     const dispatch = useDispatch()
          useEffect(()=>{
           

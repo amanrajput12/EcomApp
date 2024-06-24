@@ -10,13 +10,13 @@ export default function Login() {
   const email = useRef(null)
   const password = useRef(null)
   const userName = useRef(null)
-  // useEffect(()=>{
-  //   const token = Cookies.get('token');
-  //   console.log('Token from cookie:', token);
-  //   if(token){
-  //     navigate('Ecom/home')
-  //   }
-  // },[])
+  useEffect(()=>{
+    const token = Cookies.get('token');
+    console.log('Token from cookie:', token);
+    if(token){
+      navigate('Ecom/home')
+    }
+  },[])
   const handleFormSubmit = async(e)=>{
     e.preventDefault()
     if(login){
@@ -35,6 +35,18 @@ export default function Login() {
     console.log("email",email.current.value,password.current.value);
     await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/login`,options).then((data)=>{
       if(data.dataproduct.sucess){
+        Cookies.set('token',data.dataproduct.data.token,{
+         
+          expires: new Date(Date.now()+ 2 * 60 * 60 * 1000) , // 2 hours
+        secure: true ,
+       sameSite:'None'
+      })
+      Cookies.set('user',data.dataproduct.data._id,{
+         
+        expires: new Date(Date.now()+ 2 * 60 * 60 * 1000) , // 2 hours
+      secure: true ,
+     sameSite:'None'
+    })
         navigate('Ecom/home')
       }
     })
