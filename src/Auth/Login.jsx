@@ -33,7 +33,7 @@ export default function Login() {
         
     };
     console.log("email",email.current.value,password.current.value);
-    await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/login`,options).then((data)=>{
+    await  fetchData(`/v1/user/login`,options).then((data)=>{
       if(data.dataproduct.sucess){
         Cookies.set('token',data.dataproduct.data.token,{
          
@@ -67,7 +67,7 @@ export default function Login() {
     credentials: 'include'
     };
     console.log("email",email.current.value,password.current.value);
-    await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/singup`,options).then((data)=>{
+    await  fetchData(`/v1/user/singup`,options).then((data)=>{
       console.log("on user signup",data)
     })
     }

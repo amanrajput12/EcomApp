@@ -47,7 +47,7 @@ const Cart = ({btn="Checkout"}) => {
      if(!(orderdata.paymentMethod==="Cash")){
       console.log("online payment",orderdata.paymentMethod);
       try {
-        const orderResponse = await axios.post("https://mern-ecomapp-1.onrender.com/v1/payment/checkout",{
+        const orderResponse = await axios.post("/v1/payment/checkout",{
           amount:cartdata?.cartData?.Amount,
           cartItems:cartdata?.cartData?.data.length,
           userShipping:orderdata.address,
@@ -75,7 +75,7 @@ const Cart = ({btn="Checkout"}) => {
               userId:user,
               userShipping:orderdata.address,
             }
-          const api = await axios.post("https://mern-ecomapp-1.onrender.com/v1/payment/verify-payment",paymentData)
+          const api = await axios.post("/v1/payment/verify-payment",paymentData)
 
           navigate('/orderconfirm')
           },
@@ -121,7 +121,7 @@ const Cart = ({btn="Checkout"}) => {
                 })
              }
 
-          await    fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartquantity",option).then((data)=>{
+          await    fetchData("/v1/proudctdetail/cartquantity",option).then((data)=>{
             console.log("data on update quantity",data)
             if(data.dataproduct.message === "Quantity change sucess" ){
               toast("Quantity change sucessfully")

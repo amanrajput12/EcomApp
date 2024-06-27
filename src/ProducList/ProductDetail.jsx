@@ -31,7 +31,7 @@ const ProductDetail = () => {
                 }),
     credentials: 'include'
             };
-             fetchData(`https://mern-ecomapp-1.onrender.com/v1/product/getProductDetail`,options).then((data)=>
+             fetchData(`/v1/product/getProductDetail`,options).then((data)=>
                 setProductDetail(data.dataproduct.data))
          },[])
 
@@ -59,7 +59,7 @@ const ProductDetail = () => {
     credentials: 'include'
        }
        
-       fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cart",options).then((data)=>{
+       fetchData("/v1/proudctdetail/cart",options).then((data)=>{
         if (data.dataproduct.message === "Proudct is already in the cart"){
             toast("Proudct is already in the car")
         }
