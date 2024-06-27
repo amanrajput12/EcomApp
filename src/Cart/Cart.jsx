@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Cookies from "js-cookie"
 import GetCartData from '../../Hooks/UseGetCartData.js'
 import fetchData from '../Utils/fetch.js'
@@ -12,7 +12,8 @@ import CreateOrder from '../../Hooks/UseCreateOrder.js'
 
 const Cart = ({btn="Checkout"}) => {
  
-  
+
+
   const token = Cookies.get("token")
   const user = Cookies.get("user")
     const navigate = useNavigate()
@@ -20,9 +21,12 @@ const Cart = ({btn="Checkout"}) => {
 
   console.log("cookies data are",token,user);
   const cartdata = GetCartData(token,user)
-  console.log("usercart data",cartdata?.cartData?.Amount);
+  // console.log("usercart data",cartdata?.cartData?.Amount);
+
+
     
-  
+
+
     const handlecart = async()=>{
       console.log("cart click",btn);
       if(btn=="Checkout"){
@@ -117,16 +121,23 @@ const Cart = ({btn="Checkout"}) => {
                 })
              }
 
-          await    fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartquantity",option).then((data)=>console.log("data on update quantity",data))
+          await    fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartquantity",option).then((data)=>{
+            console.log("data on update quantity",data)
+            if(data.dataproduct.message === "Quantity change sucess" ){
+              toast("Quantity change sucessfully")
+            }
+          })
        } catch (error) {
         
        }
     }
-
+ 
+    
   
   return (
     <div className='flex flex-col  '>
-      Cart
+    <h1 className='text-2xl font-bold mb-2'>Cart</h1>
+    
        {
         cartdata?.cartData?.data.map((data,i)=>
         <div className=' flex justify-around p-3' key={data.product._id}>
@@ -150,7 +161,12 @@ const Cart = ({btn="Checkout"}) => {
                             <option value="4">4</option>
                             <option value="5">5</option>
                           </select>
-          <button onClick={()=>RemoveCartData(token,user,data.product._id)} className='p-2 bg-zinc-700 rounded-xl text-white ml-10'>Remove</button>
+          <button onClick={()=>{ 
+          
+             RemoveCartData(token,user,data.product._id,toast)
+            
+          }
+          } className='p-2 bg-zinc-700 rounded-xl text-white ml-10'>Remove</button>
                         </div>
           </div>
           <div className='w-1/4'>

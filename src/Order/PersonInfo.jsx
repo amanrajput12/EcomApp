@@ -35,7 +35,7 @@ const PersonInfo = () => {
       <label htmlFor="Street address">Street address</label>
       <input ref={street} className='border border-black rounded-md' type="text" name="" id="" />
 
-      <div className='flex '>
+      <div className='flex flex-col lg:flex-row  '>
        <div className='flex flex-col' >
         <label htmlFor="City">City</label>
         <input ref={city} className='border border-black rounded-md' type="text" name="" id="" />

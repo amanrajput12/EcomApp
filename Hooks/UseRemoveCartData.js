@@ -1,7 +1,7 @@
 import fetchData from "../src/Utils/fetch"
 
 
-const RemoveCartData = async(token,user,product)=>{
+const RemoveCartData = async(token,user,product,toast)=>{
   console.log('value on remove hook',token,user,product);
 const  options ={
    method:"POST",
@@ -15,7 +15,12 @@ const  options ={
    }),
     credentials: 'include'
 }
-fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/removedata",options).then((data)=>console.log("on remove from cart",data))
+return fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/removedata",options).then((data)=>{
+  console.log("on remove from cart",data)
+  if(data.dataproduct.message === "Product removed from the cart"){
+    toast("product remove sucessfully")
+  }
+})
 
 
 }

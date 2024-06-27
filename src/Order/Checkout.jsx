@@ -18,7 +18,7 @@ const Checkout = () => {
 
 
   return (
-    <div  className='flex w-full'>
+    <div  className='flex flex-col lg:flex-row w-full'>
       <div>
       <PersonInfo/>
       <div className='ml-11 mt-10'>
