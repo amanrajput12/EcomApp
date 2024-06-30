@@ -74,7 +74,8 @@ async function getcard(){
           amount: cartBalance.totalAmount,
           cartItems: cartBalance.totalquantity,
           userShipping:orderdata.address,
-          userId:user
+          userId:user,
+          token:token
         })
         console.log("on payment respon",orderResponse);
 
@@ -97,6 +98,7 @@ async function getcard(){
               cartItems: cartBalance.totalquantity,
               userId:user,
               userShipping:orderdata.address,
+              token:token
             }
           const api = await axios.post("/v1/payment/verify-payment",paymentData)
                 console.log("on payment confirm",api);

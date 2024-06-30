@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaCartShopping } from "react-icons/fa6";
+import Cookies from "js-cookie"
 import { LuBoxSelect } from "react-icons/lu";
 const Headercomp = () => {
     const navigate = useNavigate()
@@ -17,7 +18,11 @@ const Headercomp = () => {
         {btntoogle &&
          <div className=' flex flex-col mt-1 p-2 rounded-lg   bg-slate-200  w-24 justify-end absolute '>
         <button onClick={()=>navigate('/orderconfirm')} className='p-2 rounded-md m-1 hover:bg-white' >Order</button>
-        <button className='p-2 rounded-md m-1 hover:bg-white' >Signout</button>
+        <button onClick={()=> {
+    Cookies.remove('token');
+    Cookies.remove('user');
+    navigate('/')
+  }} className='p-2 rounded-md m-1 hover:bg-white' >Signout</button>
       </div>
       }
         </div>

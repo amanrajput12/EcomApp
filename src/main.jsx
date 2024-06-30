@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Product from './ProducList/ProductSlice.jsx'
+
 import ProductDetail from './ProducList/ProductDetail.jsx'
 import Login from './Auth/Login.jsx'
 import {Provider} from "react-redux"

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import fetchData from '../Utils/fetch'
 import Cookies from "js-cookie"
-import { useDispatch } from 'react-redux'
-import { addProduct } from '../../Store/CartSlice.js'
+
 import { FaArrowLeft,FaArrowRight } from "react-icons/fa"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GetProductDetail from '../../Hooks/UseGetProductDetail.js'
+import AddtoCart from '../../Hooks/UseAddtoCart.js'
 
 
 const ProductDetail = () => {
@@ -16,66 +17,18 @@ const ProductDetail = () => {
     const token = Cookies.get('token');
     const user = Cookies.get('user');
    
-   
-    const dispatch = useDispatch()
          useEffect(()=>{
-          
-            const options = {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                     'token':token
-                },
-                body: JSON.stringify({
-                    id: params
-                }),
-    credentials: 'include'
-            };
-             fetchData(`/v1/product/getProductDetail`,options).then((data)=>
-                setProductDetail(data.dataproduct.data))
+           GetProductDetail(token,params,setProductDetail)
+           
          },[])
 
          const handlecart = ()=>{
-          console.log("on click the cart");
-      
-
-
-       const options = {
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json',
-          'token':token
-        },
-      body:JSON.stringify({
-        product:params,
-        quantity:Number(1),
-        user:user
-
-      }),
-    credentials: 'include'
-       }
-       
-       fetchData("/v1/proudctdetail/cart",options).then((data)=>{
-        console.log("data on added to cart",data.dataproduct.cart);
-        if (data.dataproduct.message === "Proudct is already in the cart"){
-            toast("Proudct is already in the car")
-        }
-        else if (data.dataproduct.message === "product added in the cart"){
-
-        }
-        
-        else if(data.dataproduct.message === "product added in the cart"){
-          toast("product added in the cart")
-        }
-        console.log("on added to cart",data.dataproduct.message)
-         })
+         AddtoCart(token,params,user,toast)
          }
-    // console.log("in parmas",params,productDetail[0]);
+    
   return (
     <div>
-     
-
-      <div className='grid  grid-cols-10 gap-3 ' >
+        <div className='grid  grid-cols-10 gap-3 ' >
         <div className='hidden lg:col-span-3 ml-11 border lg:flex flex-col items-center border-black  '>
      
           { productDetail && productDetail[0].productImg.map((img,i)=><div className='hover:cursor-pointer mt-4' onClick={()=>setImageCount(i)} key={i}><img className='w-16 h-24  content-center' src={img} alt="img" /></div>)}
