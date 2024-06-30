@@ -4,24 +4,44 @@ import GetCartData from '../../Hooks/UseGetCartData.js'
 import fetchData from '../Utils/fetch.js'
 import RemoveCartData from '../../Hooks/UseRemoveCartData.js'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateOrder from '../../Hooks/UseCreateOrder.js'
  import axios from "axios"
+import { addProduct } from '../../Store/CartSlice.js'
 
 const Cart = ({btn="Checkout"}) => {
  
+  
 
+ const [cartBalance,setCartBalance] = useState({})
 
   const token = Cookies.get("token")
   const user = Cookies.get("user")
     const navigate = useNavigate()
+    const dispatch = useDispatch()
   const orderdata = useSelector((store)=>store.Order)
-
+  const cart = useSelector((store)=>store.Cart)
+       console.log("redux ",cart.Products);
   console.log("cookies data are",token,user);
-  const cartdata = GetCartData(token,user)
-  // console.log("usercart data",cartdata?.cartData?.Amount);
+   
+  let cartdata
+useEffect(()=>{
+ getcard()
+     
+},[])
+
+async function getcard(){
+    GetCartData(token,user,dispatch,addProduct)
+  console.log("cardata",cart.Products);
+  setCartBalance({
+    totalAmount:cart.totalAmount,
+   totalquantity:cart.totalQuantity
+  })
+}
+
+  
 
 
     
@@ -33,23 +53,26 @@ const Cart = ({btn="Checkout"}) => {
         navigate('/checkout')
       }
   if((btn="Order Now")){
+    let BillAmount = "";
+    let BillStatus = ""
     if(!(orderdata.address,orderdata.paymentMethod)){
       toast("Select Address and PaymentMethod");
     return null
     }
       console.log("order is able");
-   const productId= cartdata?.cartData?.data.map((data)=>data.product._id )
-     const quantity = cartdata?.cartData?.data.map((data)=>({
+   const productId= cart.Products.map((data)=>data.product._id )
+     const orderquantity = cart.Products.map((data)=>({
       product:data.product._id,
       quantity:data.quantity
-     }))
+    }))
+   
    
      if(!(orderdata.paymentMethod==="Cash")){
-      console.log("online payment",orderdata.paymentMethod);
+      console.log("online payment",orderdata.paymentMethod,cartBalance.totalAmount,cartBalance.totalquantity);
       try {
         const orderResponse = await axios.post("/v1/payment/checkout",{
-          amount:cartdata?.cartData?.Amount,
-          cartItems:cartdata?.cartData?.data.length,
+          amount: cartBalance.totalAmount,
+          cartItems: cartBalance.totalquantity,
           userShipping:orderdata.address,
           userId:user
         })
@@ -70,13 +93,18 @@ const Cart = ({btn="Checkout"}) => {
               orderId:response.razorpay_payment_id,
               paymentId:response.razorpay_order_id,
               signature:response.razorpay_signature,
-              amount:cartdata?.cartData?.Amount,
-              cartItems:cartdata?.cartData?.data.length,
+              amount: cartBalance.totalAmount,
+              cartItems: cartBalance.totalquantity,
               userId:user,
               userShipping:orderdata.address,
             }
           const api = await axios.post("/v1/payment/verify-payment",paymentData)
-
+                console.log("on payment confirm",api);
+                if(api.status == "200"){
+                            BillAmount =cart.totalAmount,
+                            BillStatus = "paid"
+                  CreateOrder(token,user,productId,orderquantity,orderdata.address,orderdata.paymentMethod,BillAmount,BillStatus,toast,dispatch)
+                }
           navigate('/orderconfirm')
           },
           "prefill": {
@@ -97,12 +125,18 @@ const Cart = ({btn="Checkout"}) => {
       } catch (error) {
          console.log("error on payment",error.message);
       }
-      return null
+       return null
      }
-    console.log("Product IDs:", quantity);
-   
-  
-        CreateOrder(token,user,productId,quantity,orderdata.address,orderdata.paymentMethod)
+    console.log("Product IDs:",productId);
+    console.log("quantity:",orderquantity);
+       BillAmount = cart.totalAmount;
+       BillStatus  = "Not paid"
+      
+       
+        
+     
+        CreateOrder(token,user,productId,orderquantity,orderdata.address,orderdata.paymentMethod,BillAmount,BillStatus,toast,dispatch)
+        navigate('/orderconfirm')
   }
     
     }
@@ -117,7 +151,8 @@ const Cart = ({btn="Checkout"}) => {
                 },
                 body: JSON.stringify({
                   quantity:Number(quantity),
-                  product:id
+                  product:id,
+                  user:user
                 })
              }
 
@@ -125,6 +160,7 @@ const Cart = ({btn="Checkout"}) => {
             console.log("data on update quantity",data)
             if(data.dataproduct.message === "Quantity change sucess" ){
               toast("Quantity change sucessfully")
+               dispatch(addProduct(data.dataproduct.cart))
             }
           })
        } catch (error) {
@@ -138,8 +174,8 @@ const Cart = ({btn="Checkout"}) => {
     <div className='flex flex-col  '>
     <h1 className='text-2xl font-bold mb-2'>Cart</h1>
     
-       {
-        cartdata?.cartData?.data.map((data,i)=>
+       { cart.Products && 
+        cart?.Products?.map((data,i)=>
         <div className=' flex justify-around p-3' key={data.product._id}>
           <div className='w-1/2'>
           <h2 className=''>{data.product.title}</h2>
@@ -163,14 +199,14 @@ const Cart = ({btn="Checkout"}) => {
                           </select>
           <button onClick={()=>{ 
           
-             RemoveCartData(token,user,data.product._id,toast)
+             RemoveCartData(token,user,data.product._id,toast,dispatch,addProduct)
             
           }
           } className='p-2 bg-zinc-700 rounded-xl text-white ml-10'>Remove</button>
                         </div>
           </div>
           <div className='w-1/4'>
-          <img className='w= w-[120px] h-[200px]' src={data.product.productImg[0]} alt="" />
+          <img className=' w-[120px] h-[200px]' src={data.product.productImg[0]} alt="" />
           </div>
         </div>
         )
@@ -182,8 +218,8 @@ const Cart = ({btn="Checkout"}) => {
        
         </span>
         <span>
-          <h1 className='font-bold text-2xl'>₹  {cartdata?.cartData?.Amount}</h1>
-          <h1 className='font-bold text-2xl'>{cartdata?.cartData?.data.length} items</h1>
+          <h1 className='font-bold text-2xl'>₹  {cart.totalAmount}</h1>
+          <h1 className='font-bold text-2xl'>{cart.totalQuantity} items</h1>
         </span>
        </div>
        <button onClick={()=>handlecart()} type='submit' className=' p-2 m-6  rounded-md text-white font-semibold w-[90%] bg-blue-900'>{btn}</button>

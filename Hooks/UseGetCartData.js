@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react"
+
 import fetchData from "../src/Utils/fetch.js"
 
 
 
-const GetCartData = (token,user)=>{
-    const [cartData,setCartData] = useState(null)
+
+const GetCartData = async (token,user,dispatch,addProduct)=>{
+    
     console.log("in the frontend ",user,token);
-    useEffect(()=>{
+   
+   
         const options = {
             method: "POST",
             headers: {
@@ -18,10 +20,13 @@ const GetCartData = (token,user)=>{
             }),
     credentials: 'include'
         }
-        fetchData("/v1/proudctdetail/cartdata",options).then((data)=>setCartData(data?.dataproduct))
-      
-    },[])
-    return  {cartData}
-}
+     return   fetchData("/v1/proudctdetail/cartdata",options).then((data)=>{
+              if(data){
+                console.log("data on the reduxt",data.dataproduct.data);
+                dispatch(addProduct(data.dataproduct.data))
+              }
+            
+                  })
+                }
 
 export default GetCartData

@@ -14,6 +14,7 @@ import GetProduct from '../Hooks/UseGetProduct.js'
  const getproduct = GetProduct(token)
    console.log("data is the ",getproduct.product);
   return (
+    
     <>
 
  <Product products={getproduct?.product} />

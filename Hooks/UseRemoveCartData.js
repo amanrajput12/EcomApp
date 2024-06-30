@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import fetchData from "../src/Utils/fetch"
 
 
-const RemoveCartData = async(token,user,product,toast)=>{
+
+const RemoveCartData = async(token,user,product,toast,dispatch,addProduct)=>{
   console.log('value on remove hook',token,user,product);
+ 
 const  options ={
    method:"POST",
    headers:{
@@ -19,6 +22,7 @@ return fetchData("/v1/proudctdetail/removedata",options).then((data)=>{
   console.log("on remove from cart",data)
   if(data.dataproduct.message === "Product removed from the cart"){
     toast("product remove sucessfully")
+    dispatch(addProduct(data.dataproduct.cart))
   }
 })
 

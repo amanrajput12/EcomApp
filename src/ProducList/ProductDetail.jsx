@@ -37,11 +37,7 @@ const ProductDetail = () => {
 
          const handlecart = ()=>{
           console.log("on click the cart");
-       dispatch(addProduct({
-        productImg:productDetail[0].productImg[0],
-        price:productDetail[0]?.price,
-          id:productDetail[0]?._id
-       }))
+      
 
 
        const options = {
@@ -60,8 +56,12 @@ const ProductDetail = () => {
        }
        
        fetchData("/v1/proudctdetail/cart",options).then((data)=>{
+        console.log("data on added to cart",data.dataproduct.cart);
         if (data.dataproduct.message === "Proudct is already in the cart"){
             toast("Proudct is already in the car")
+        }
+        else if (data.dataproduct.message === "product added in the cart"){
+
         }
         
         else if(data.dataproduct.message === "product added in the cart"){
