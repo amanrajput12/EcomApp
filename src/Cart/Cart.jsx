@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreateOrder from '../../Hooks/UseCreateOrder.js'
  import axios from "axios"
 import { addProduct } from '../../Store/CartSlice.js'
+import ChangeCart from '../../Hooks/UseChangeCart.js'
 
 const Cart = ({btn="Checkout"}) => {
  
@@ -40,13 +41,6 @@ async function getcard(){
    totalquantity:cart.totalQuantity
   })
 }
-
-  
-
-
-    
-
-
     const handlecart = async()=>{
       console.log("cart click",btn);
       if(btn=="Checkout"){
@@ -142,33 +136,7 @@ async function getcard(){
   }
     
     }
-    const handlecartquantity = async(quantity,id)=>{
-      console.log(quantity,id)
-       try {
-             const option = {
-               method:"POST",
-                headers:{
-                  'Content-Type': 'application/json',
-                  'token':token
-                },
-                body: JSON.stringify({
-                  quantity:Number(quantity),
-                  product:id,
-                  user:user
-                })
-             }
-
-          await    fetchData("/v1/proudctdetail/cartquantity",option).then((data)=>{
-            console.log("data on update quantity",data)
-            if(data.dataproduct.message === "Quantity change sucess" ){
-              toast("Quantity change sucessfully")
-               dispatch(addProduct(data.dataproduct.cart))
-            }
-          })
-       } catch (error) {
-        
-       }
-    }
+   
  
     
   
@@ -190,7 +158,7 @@ async function getcard(){
                             Qty
                           </label>
                           <select className='w-14'
-                            onChange={(e) =>handlecartquantity(e.target.value,data.product._id) }
+                            onChange={(e) =>  ChangeCart(token,data.product._id,user,e.target.value,toast,dispatch,addProduct) }
                             value={data.quantity}
                           >
                             <option value="1">1</option>

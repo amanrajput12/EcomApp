@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import fetchData from '../Utils/fetch'
+
 import Cookies from "js-cookie"
 
 import { FaArrowLeft,FaArrowRight } from "react-icons/fa"
