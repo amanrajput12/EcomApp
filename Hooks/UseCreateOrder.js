@@ -5,7 +5,7 @@ import { orders } from "../Store/OrderSlice.js";
 
 
 
-const CreateOrder = (token,user,products,orderquantity,address,paymentMethod,BillAmount,BillStatus,toast,dispatch)=>{
+const CreateOrder = (token,user,products,orderquantity,address,paymentMethod,BillAmount,BillStatus,toast,dispatch,navigate)=>{
        console.log("token",token,user,products,orderquantity,address,paymentMethod,BillAmount,BillStatus,toast,dispatch);
   
     const options = {
@@ -27,6 +27,13 @@ const CreateOrder = (token,user,products,orderquantity,address,paymentMethod,Bil
     }
     fetchData("/v1/order/add",options).then((data)=>{
         console.log("on create order sucess",data)
+        if(data.dataproduct.sucess){
+            toast("Order created Sucessfully")
+            navigate('/orderconfirm')
+        }
+        else if(!(data.dataproduct.sucess)){
+            toast("Error on Creating Order")
+        }
       
     })
 }
