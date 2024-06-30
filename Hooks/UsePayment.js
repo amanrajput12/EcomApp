@@ -89,7 +89,7 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
             
          
             CreateOrder(token,user,productId,orderquantity,orderdata.address,orderdata.paymentMethod,BillAmount,BillStatus,toast,dispatch,navigate)
-            navigate('/orderconfirm')
+           
       
 }
 
