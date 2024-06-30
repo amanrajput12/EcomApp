@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from "react"
 import fetchData from "../src/Utils/fetch";
-const GetProduct = (token)=>{
+const GetProduct = async(token,dispatch,AllProducts)=>{
     console.log("token in product get",token);
-    const [product,setProduct]= useState(null)
-    useEffect(()=>{
+    
+ 
         const options = {
           method: "GET",
           headers: {
@@ -13,14 +13,14 @@ const GetProduct = (token)=>{
          
     credentials: 'include'
       };
-         fetchData("/v1/product/getProduct",options).then((data)=>{
-             console.log("in useeffect",data.dataproduct.result);
-             setProduct(data.dataproduct.result)
+     return    fetchData("/v1/product/getProduct",options).then((data)=>{
+             console.log("product data",data.dataproduct.result);
+              dispatch(AllProducts(data.dataproduct.result))
          })
        
        
-       },[token])
-    return {product}
+       
+    
 }
 
 export default  GetProduct
