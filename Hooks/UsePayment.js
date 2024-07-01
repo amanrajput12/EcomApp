@@ -31,7 +31,7 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
             console.log("on payment respon",orderResponse);
     
             const {orderId,amount}= orderResponse.data
-    
+                 
             var options = {
               "key": import.meta.env.VITE_KEY, // Enter the Key ID generated from the Dashboard
               "amount": amount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -53,10 +53,12 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
                 }
               const api = await axios.post("/v1/payment/verify-payment",paymentData)
                     console.log("on payment confirm",api);
+                    const {_id} = api?.data?.data
+                    console.log("id of payment",_id);
                     if(api.status == "200"){
                                 BillAmount =cart.totalAmount,
                                 BillStatus = "paid"
-                      CreateOrder(token,user,productId,orderquantity,orderdata.address,orderdata.paymentMethod,BillAmount,BillStatus,toast,dispatch,navigate)
+                      CreateOrder(token,user,productId,orderquantity,orderdata.address,orderdata.paymentMethod,BillAmount,BillStatus,toast,dispatch,navigate,_id)
                     }
               
               },
