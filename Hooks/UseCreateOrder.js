@@ -26,7 +26,7 @@ const CreateOrder = (token,user,products,orderquantity,address,paymentMethod,Bil
         }),
     credentials: 'include'
     }
-    fetchData("/v1/order/add",options).then((data)=>{
+    fetchData("https://mern-ecomapp-1.onrender.com/v1/order/add",options).then((data)=>{
         console.log("on create order sucess",data)
         if(data.dataproduct.sucess){
             toast("Order created Sucessfully")

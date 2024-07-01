@@ -16,7 +16,7 @@ const ChangeCart = async(token,id,user,quantity,toast,dispatch,addProduct)=>{
            })
         }
 
-     await    fetchData("/v1/proudctdetail/cartquantity",option).then((data)=>{
+     await    fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartquantity",option).then((data)=>{
        console.log("data on update quantity",data)
        if(data.dataproduct.message === "Quantity change sucess" ){
          toast("Quantity change sucessfully")

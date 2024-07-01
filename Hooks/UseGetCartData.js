@@ -20,7 +20,7 @@ const GetCartData = async (token,user,dispatch,addProduct)=>{
             }),
     credentials: 'include'
         }
-     return   fetchData("/v1/proudctdetail/cartdata",options).then((data)=>{
+     return   fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartdata",options).then((data)=>{
               if(data){
                 console.log("data on the reduxt",data.dataproduct.data);
                 dispatch(addProduct(data.dataproduct.data))

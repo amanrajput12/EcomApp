@@ -13,7 +13,7 @@ const GetProduct = async(token,dispatch,AllProducts)=>{
          
     credentials: 'include'
       };
-     return    fetchData("/v1/product/getProduct",options).then((data)=>{
+     return    fetchData("https://mern-ecomapp-1.onrender.com/v1/product/getProduct",options).then((data)=>{
              console.log("product data",data.dataproduct.result);
               dispatch(AllProducts(data.dataproduct.result))
          })

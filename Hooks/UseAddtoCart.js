@@ -17,7 +17,7 @@ const AddtoCart = async(token,params,user,toast)=>{
     credentials: 'include'
        }
        
-       fetchData("/v1/proudctdetail/cart",options).then((data)=>{
+       fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cart",options).then((data)=>{
         console.log("data on added to cart",data.dataproduct.cart);
         if (data.dataproduct.message === "Proudct is already in the cart"){
             toast("Proudct is already in the car")

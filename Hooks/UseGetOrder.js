@@ -16,7 +16,7 @@ const GetOrder = (token,user,dispatch,orders)=>{
  credentials: 'include'
        }
 
-       fetchData('/v1/order/get',options).then((data)=>{
+       fetchData('https://mern-ecomapp-1.onrender.com/v1/order/get',options).then((data)=>{
         dispatch(orders(data.dataproduct))
         console.log("on order get",data)}
     )

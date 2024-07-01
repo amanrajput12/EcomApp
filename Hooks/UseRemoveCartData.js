@@ -18,7 +18,7 @@ const  options ={
    }),
     credentials: 'include'
 }
-return fetchData("/v1/proudctdetail/removedata",options).then((data)=>{
+return fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/removedata",options).then((data)=>{
   console.log("on remove from cart",data)
   if(data.dataproduct.message === "Product removed from the cart"){
     toast("product remove sucessfully")

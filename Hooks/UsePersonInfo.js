@@ -25,7 +25,7 @@ const UserInfo = (fullName,email,phone,street,city,state,postalcode,token,user)=
     credentials: 'include'
    }
 
-   return fetchData("/v1/address/add",options).then((data)=>{
+   return fetchData("https://mern-ecomapp-1.onrender.com/v1/address/add",options).then((data)=>{
     console.log("data on add adress",data);
         return data
      })
