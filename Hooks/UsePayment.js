@@ -21,7 +21,7 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
          if(!(orderdata.paymentMethod==="Cash")){
           console.log("online payment",orderdata.paymentMethod,cartBalance.totalAmount,cartBalance.totalquantity);
           try {
-            const orderResponse = await axios.post("/v1/payment/checkout",{
+            const orderResponse = await axios.post("https://mern-ecomapp-1.onrender.com/v1/payment/checkout",{
               amount: cartBalance.totalAmount,
               cartItems: cartBalance.totalquantity,
               userShipping:orderdata.address,
