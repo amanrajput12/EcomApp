@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cookies from "js-cookie"
 import GetOrder from '../../Hooks/UseGetOrder.js'
 import { orders } from '../../Store/OrderSlice.js'
+import { useNavigate } from 'react-router-dom'
 
 const Order = () => {
   const data = useSelector((store) => store.Order)
@@ -11,9 +12,25 @@ const Order = () => {
       
   const token = Cookies.get("token")
   const user = Cookies.get("user")
+  const navigate = useNavigate()
 useEffect(()=>{
 
   GetOrder(token,user,dispatch,orders)
+
+  console.log("Component mounted");
+  let interval = setInterval(() => {
+    const token = Cookies.get('token')
+    const user  = Cookies.get('user')
+    console.log("set interval",token,user);
+    if(!(token,user)){
+       navigate('/')
+    }
+  }, 2000);
+
+  return () => {
+    console.log("Clearing interval");
+    clearInterval(interval);
+  }
 },[])
 
 

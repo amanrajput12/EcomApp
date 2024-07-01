@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import Cookies from "js-cookie"
 
@@ -16,10 +16,25 @@ const ProductDetail = () => {
     const [imageCount,setImageCount]= useState(0)
     const token = Cookies.get('token');
     const user = Cookies.get('user');
-   
+   const navigate = useNavigate()
          useEffect(()=>{
            GetProductDetail(token,params,setProductDetail)
            
+           console.log("Component mounted");
+           let interval = setInterval(() => {
+             const token = Cookies.get('token')
+             const user  = Cookies.get('user')
+         
+             if(!(token,user)){
+                navigate('/')
+             }
+           }, 2000);
+       
+           return () => {
+             console.log("Clearing interval");
+             clearInterval(interval);
+           }
+
          },[])
 
          const handlecart = ()=>{

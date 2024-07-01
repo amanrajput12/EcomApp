@@ -5,12 +5,30 @@ import Cookies from "js-cookie"
 import { GetPersonInfo } from '../../Hooks/UseGetPersonInfo.js';
 import { useDispatch } from 'react-redux';
 import {addaddress,addpaymentMethod} from "../../Store/OrderSlice.js"
+import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
   const dispatch = useDispatch()
   const token =  Cookies.get('token')
   const user = Cookies.get('user')
-
+const navigate = useNavigate()
  
+
+  useEffect(()=>{
+    console.log("Component mounted");
+    let interval = setInterval(() => {
+      const token = Cookies.get('token')
+      const user  = Cookies.get('user')
+      
+      if(!(token,user)){
+         navigate('/')
+      }
+    }, 2000);
+
+    return () => {
+      console.log("Clearing interval");
+      clearInterval(interval);
+    }
+  },[])
 
   const getPerson =   GetPersonInfo(token,user)
   console.log("datat for map",getPerson?.Address?.dataproduct?.sucess);

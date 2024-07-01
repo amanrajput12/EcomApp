@@ -10,7 +10,7 @@ const Ecom = () => {
     let interval = setInterval(() => {
       const token = Cookies.get('token')
       const user  = Cookies.get('user')
-      console.log("set interval",token,user);
+    
       if(!(token,user)){
          navigate('/')
       }
