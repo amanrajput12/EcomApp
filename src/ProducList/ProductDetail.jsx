@@ -62,7 +62,10 @@ const ProductDetail = () => {
               <h2 className='lg:mt-28 max-w-60'>{productDetail[0]?.description}</h2>
            </div>
             <div className='flex items-center justify-evenly'>
-              <p className=''>{productDetail[0]?.price}</p>
+               <div>
+                <p ><span className='font-bold line-through'> ₹ {productDetail[0]?.price} </span>{productDetail[0]?.discountPercentage} % off</p>
+           <p className='ml-2'>₹ {Math.round(productDetail[0]?.price-(productDetail[0]?.discountPercentage*productDetail[0]?.price)/100)}</p>
+           </div>
               <div>
                 <button onClick={handlecart} className='bg-orange-600  p-2 lg:p-4 rounded-xl text-white font-bold '>ADD TO CART</button>
                

@@ -70,7 +70,9 @@ console.log("cart used ",cartBalance);
         <div className=' flex justify-around p-3' key={data.product._id}>
           <div className='w-1/2'>
           <h2 className=''>{data.product.title}</h2>
-           <h2>₹ {data.product.price}</h2>
+       
+           <p ><span className='font-bold line-through'> ₹ {data.product.price} </span>{data.product.discountPercentage} % off</p>
+           <p>₹ {Math.round(data.product.price-(data.product.discountPercentage*data.product.price)/100)}</p>
                      <div className="text-gray-500  p-3 flex items-center mt-11">
                           <label
                             htmlFor="quantity"
@@ -110,6 +112,7 @@ console.log("cart used ",cartBalance);
         </span>
         <span>
           <h1 className='font-bold text-2xl'>₹  {cart.totalAmount}</h1>
+       
           <h1 className='font-bold text-2xl'>{cart.totalQuantity} items</h1>
         </span>
        </div>

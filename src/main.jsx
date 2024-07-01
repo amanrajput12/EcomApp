@@ -12,6 +12,7 @@ import Ecom from './Ecom.jsx'
 import Cart from './Cart/Cart.jsx'
 import Checkout from './Order/Checkout.jsx'
 import Order from './Order/Order.jsx'
+
 const route = createBrowserRouter([
   {
     path:'/',
@@ -48,10 +49,13 @@ const route = createBrowserRouter([
   
 ])
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={AppStore}>
+   
  <RouterProvider router={route}>
 
  </RouterProvider>
+ 
  </Provider>
 )
