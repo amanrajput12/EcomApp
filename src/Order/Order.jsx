@@ -42,15 +42,15 @@ useEffect(()=>{
           console.log("data on map", orderData);
 
             // Extracting quantities from orderquantity
-            const quantities = orderData.orderquantity.map(item => item.quantity);
+            const quantities = orderData?.orderquantity.map(item => item.quantity);
             console.log("quantities", quantities);
           return (
             <div className='border border-slate-950 m-4 p-1 rounded-md' key={orderData._id}>
               <h1 className='font-bold ml-4 text-2xl'>TotalBill ₹ {orderData.BillAmount}</h1>
-              <h2 className=' ml-4 '>BillStatus <span className='font-thin'> {orderData.BillStatus}
+              <h2 className=' ml-4 '>BillStatus <span className='font-thin'> {orderData?.BillStatus}
                
-              <p> Order Time {new Date(orderData.createdAt).toLocaleString()} </p>
-              <p>Delivery Address <span className='font-semibold'>{orderData?.address?.street+ " "+orderData.address.city +" "+ orderData.address.state}</span></p>
+              <p> Order Time {new Date(orderData?.createdAt).toLocaleString()} </p>
+              <p>Delivery Address <span className='font-semibold'>{orderData?.address?.street+ " "+orderData?.address?.city +" "+ orderData?.address?.state}</span></p>
               <p> PostalCode {orderData.address.postalcode}</p>
 
               </span>
@@ -66,7 +66,7 @@ useEffect(()=>{
                            <p className='font-bold'>Quantity {quantities[i]}</p>
                     </div>
                     <div className='w-1/4 mt-2'>
-                      <img className='w-[160px] h-[200px]' src={order.productImg[0]} alt="Product" />
+                      <img className='w-[160px] h-[200px]' src={order?.productImg[0]} alt="Product" />
                     </div>
                   </div>
                 ))
