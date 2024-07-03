@@ -7,6 +7,7 @@ export default function Login() {
   const navigate = useNavigate()
  console.log("cookies",Cookies.get('token'));
   const [login,setLogin]= useState(true)
+  const [isGuest, setIsGuest] = useState(false);
   const email = useRef(null)
   const password = useRef(null)
   const userName = useRef(null)
@@ -17,6 +18,17 @@ export default function Login() {
       navigate('Ecom/home')
     }
   },[])
+
+  useEffect(()=>{
+  if(isGuest){
+    email.current.value = "guest@gmail.com";
+    password.current.value = "Guest@2020"
+  }
+  else {
+    email.current.value ="";
+    password.current.value ="";
+  }
+  },[isGuest])
   const handleFormSubmit = async(e)=>{
     e.preventDefault()
     if(login){
@@ -147,6 +159,7 @@ export default function Login() {
               </div>
   
               <div>
+               {login && <p className="mb-1"><input onClick={()=>setIsGuest(!isGuest)}  checked={isGuest} type="checkbox" />Log in as Guest User</p> }
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
