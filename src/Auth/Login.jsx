@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react"
 import fetchData from "../Utils/fetch"
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import ReactLoading from 'react-loading';
 
 export default function Login() {
   const navigate = useNavigate()
  console.log("cookies",Cookies.get('token'));
   const [login,setLogin]= useState(true)
   const [isGuest, setIsGuest] = useState(false);
+  const [loading,setLoading] = useState(null)
   const email = useRef(null)
   const password = useRef(null)
   const userName = useRef(null)
@@ -32,6 +34,7 @@ export default function Login() {
   const handleFormSubmit = async(e)=>{
     e.preventDefault()
     if(login){
+      setLoading("flex")
       const options = {
         method: "POST",
         headers: {
@@ -59,6 +62,7 @@ export default function Login() {
       secure: true ,
      sameSite:'None'
     })
+    setLoading(null)
         navigate('Ecom/home')
       }
     })
@@ -91,7 +95,7 @@ export default function Login() {
      
         <div className="flex min-h-full bg-[#0f172a] h-screen text-white flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-           
+          <ReactLoading className={`mx-auto ${loading}`} hidden type="balls" color={"#ffffff"}  height={100} width={100} />
             <h2 className="mt-10  text-white text-center text-2xl font-bold leading-9 tracking-tight ">
              {login ? 'Log in to your account': 'Create a New Account'}
             </h2>
