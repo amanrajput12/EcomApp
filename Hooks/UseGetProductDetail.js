@@ -14,9 +14,11 @@ const GetProductDetail = async(token,params,setProductDetail)=>{
             id: params
         }),
 credentials: 'include'
-    };
+    }; 
+    
      fetchData(`https://mern-ecomapp-1.onrender.com/v1/product/getProductDetail`,options).then((data)=>
         setProductDetail(data.dataproduct.data))
+   
 }
 
 export default GetProductDetail

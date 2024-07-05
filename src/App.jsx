@@ -6,10 +6,10 @@ import Cookies from "js-cookie"
 import GetProduct from '../Hooks/UseGetProduct.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { AllProducts } from '../Store/ProductSlice.js';
-
+import  {  List  } from 'react-content-loader'
 
   function App() {
-    
+    const [loading, setLoading] = useState(true);
  
   const token = Cookies.get('token');
   console.log('Token from cookie:', token);
@@ -18,20 +18,33 @@ import { AllProducts } from '../Store/ProductSlice.js';
 
  useEffect(()=>{
    console.log("useefect of app call");
-    GetProduct(token,dispatch,AllProducts)
+    GetProduct(token,dispatch,AllProducts).then(()=>{
+      setLoading(false)
+    })
  },[])
 
  const navigate = useNavigate()
  function handleDetail(id){
        navigate(`/Ecom/product-detail/${id}`)
  }
+ const MyCodeLoader = () =>  <List/> 
    console.log("data is the ",Products.AppProduct);
+
   return (
     
     <>
  <div className="bg-white">
       <div className="mx-auto  max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+  {loading && 
+    <div className="flex flex-col">
+   <MyCodeLoader  /> 
+   <MyCodeLoader  /> 
+   <MyCodeLoader  /> 
+   <MyCodeLoader  /> 
+   
+   </div>
+   }
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
           {Products?.AppProduct?.map((product) => (

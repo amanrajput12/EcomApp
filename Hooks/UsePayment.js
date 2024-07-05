@@ -3,11 +3,16 @@ import axios from "axios";
 import CreateOrder from './UseCreateOrder.js'
 
 const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navigate)=>{
- 
+        console.log("order adress",orderdata.address);
         let BillAmount = "";
         let BillStatus = ""
-        if(!(orderdata.address,orderdata.paymentMethod)){
-          toast("Select Address and PaymentMethod");
+        if(!orderdata.address){
+          toast("Select Address");
+          return null
+        }
+        if(!orderdata.paymentMethod){
+          
+          toast("Select PaymentMethod");
         return null
         }
           console.log("order is able");

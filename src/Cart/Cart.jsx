@@ -12,13 +12,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { addProduct } from '../../Store/CartSlice.js'
 import ChangeCart from '../../Hooks/UseChangeCart.js'
 import Payment from '../../Hooks/UsePayment.js'
+import Loading from '../Utils/Loading.jsx'
 
 const Cart = ({btn="Checkout"}) => {
  
   
 
  const [cartBalance,setCartBalance] = useState({})
-
+ const [loading, setLoading] = useState(true);
   const token = Cookies.get("token")
   const user = Cookies.get("user")
     const navigate = useNavigate()
@@ -49,7 +50,7 @@ useEffect(()=>{
 },[])
 
 async function getcard(){
-    GetCartData(token,user,dispatch,addProduct)
+    GetCartData(token,user,dispatch,addProduct).then((data)=>setLoading(false))
   console.log("cardata",cart.Products);
   setCartBalance({
     totalAmount:cart.totalAmount,
@@ -78,8 +79,9 @@ console.log("cart used ",cartBalance);
   return (
     <div className='flex flex-col  '>
     <h1 className='text-2xl font-bold mb-2'>Cart</h1>
-    
-       { cart.Products && 
+    {loading &&  <Loading/>}
+       {  cart.Products && 
+          
         cart?.Products?.map((data,i)=>
         <div className=' flex justify-around p-3' key={data.product._id}>
           <div className='w-1/2'>

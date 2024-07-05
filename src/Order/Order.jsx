@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import GetOrder from '../../Hooks/UseGetOrder.js'
 import { orders } from '../../Store/OrderSlice.js'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../Utils/Loading.jsx'
 
 const Order = () => {
   const data = useSelector((store) => store.Order)
@@ -38,9 +39,12 @@ useEffect(()=>{
     <div>
       My order
       {
+        !data.orders.order && <Loading/>
+      }
+       {
         data?.orders?.order?.map((orderData) => {
           console.log("data on map", orderData);
-
+             
             // Extracting quantities from orderquantity
             const quantities = orderData?.orderquantity?.map(item => item?.quantity);
             console.log("quantities", quantities);

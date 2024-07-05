@@ -8,14 +8,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GetProductDetail from '../../Hooks/UseGetProductDetail.js'
 import AddtoCart from '../../Hooks/UseAddtoCart.js'
+import Loading from '../Utils/Loading.jsx';
 
 
 const ProductDetail = () => {
     const {params} = useParams()
     const [productDetail,setProductDetail]= useState(null)
+  
     const [imageCount,setImageCount]= useState(0)
     const token = Cookies.get('token');
     const user = Cookies.get('user');
+   
    const navigate = useNavigate()
          useEffect(()=>{
            GetProductDetail(token,params,setProductDetail)
@@ -36,7 +39,8 @@ const ProductDetail = () => {
            }
 
          },[])
-
+ 
+         
          const handlecart = ()=>{
          AddtoCart(token,params,user,toast)
          }
@@ -44,12 +48,15 @@ const ProductDetail = () => {
   return (
     <div>
         <div className='grid  grid-cols-10 gap-3 ' >
-        <div className='hidden lg:col-span-3 ml-11 border lg:flex flex-col items-center border-black  '>
-     
+   
+        <div className='hidden lg:col-span-3 ml-11 border lg:flex flex-col items-center   '>
+         
+        { !productDetail && <Loading/>}
           { productDetail && productDetail[0].productImg.map((img,i)=><div className='hover:cursor-pointer mt-4' onClick={()=>setImageCount(i)} key={i}><img className='w-16 h-24  content-center' src={img} alt="img" /></div>)}
         </div>
         <div className='col-span-10 lg:col-span-7    '>
-      
+       
+        { !productDetail && <Loading/>}
            { productDetail &&
            <div>
         <div className='flex-col flex lg:flex-row items-center lg:justify-around'>
