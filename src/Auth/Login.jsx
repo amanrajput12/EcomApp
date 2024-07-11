@@ -70,6 +70,7 @@ export default function Login() {
 
 
     if(!login){
+      setLoading("flex")
       const options = {
         method: "POST",
         headers: {
@@ -85,6 +86,23 @@ export default function Login() {
     console.log("email",email.current.value,password.current.value);
     await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/singup`,options).then((data)=>{
       console.log("on user signup",data)
+      
+      if(data.dataproduct.sucess){
+        Cookies.set('token',data.dataproduct.data.token,{
+         
+          expires: new Date(Date.now()+ 2 * 60 * 60 * 1000) , // 2 hours
+        secure: true ,
+       sameSite:'None'
+      })
+      Cookies.set('user',data.dataproduct.data._id,{
+         
+        expires: new Date(Date.now()+ 2 * 60 * 60 * 1000) , // 2 hours
+      secure: true ,
+     sameSite:'None'
+    })
+    setLoading(null)
+        navigate('Ecom/home')
+      }
     })
     }
     
