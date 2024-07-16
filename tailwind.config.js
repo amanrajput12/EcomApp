@@ -6,6 +6,15 @@ export default {
   ],
   theme: {
     extend: {},
+   animation:{
+    mover: 'mover 4s linear infinite'
+   },
+   keyframes:{
+    mover:{
+      '0%,100%':{transform:"rotate(-30deg)"},
+      '50%': { transform: 'rotate(3deg)' }, 
+    }
+   },
     screens: {
       'sm': '450px',
       // => @media (min-width: 640px) { ... }

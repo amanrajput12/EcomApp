@@ -86,7 +86,7 @@ export default function Login() {
     console.log("email",email.current.value,password.current.value);
     await  fetchData(`https://mern-ecomapp-1.onrender.com/v1/user/singup`,options).then((data)=>{
       console.log("on user signup",data)
-      
+
       if(data.dataproduct.sucess){
         Cookies.set('token',data.dataproduct.data.token,{
          
@@ -110,7 +110,7 @@ export default function Login() {
   }
     return (
       <>
-     
+    
         <div className="flex min-h-full bg-[#0f172a] h-screen text-white flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <ReactLoading className={`mx-auto ${loading}`} hidden type="balls" color={"#ffffff"}  height={100} width={100} />
