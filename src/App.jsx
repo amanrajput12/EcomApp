@@ -62,7 +62,9 @@ import  {  List  } from 'react-content-loader'
                     <a >
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.title}
+                      
                     </a>
+                    <h2 className='font-medium'>₹ {product.price}</h2>
                   </h3>
                 
                 </div>
