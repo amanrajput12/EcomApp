@@ -1,26 +1,23 @@
-import { memo, useEffect, useState } from "react"
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import fetchData from "../src/Utils/fetch";
-const GetProduct = async(token,dispatch,AllProducts)=>{
-    console.log("token in product get",token);
-    
- 
-        const options = {
-          method: "GET",
-          headers: {
-              'Content-Type': 'application/json',
-              'token':token
-          },
-         
-    credentials: 'include'
-      };
-     return    fetchData("https://mern-ecomapp-1.onrender.com/v1/product/getProduct",options).then((data)=>{
-             console.log("product data",data.dataproduct.result);
-              dispatch(AllProducts(data.dataproduct.result))
-         })
-       
-       
-       
-    
-}
 
-export default  GetProduct
+const GetProduct = createAsyncThunk("data/fetchProduct", async (token) => {
+  try {
+    const options = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token,
+      },
+      credentials: 'include',
+    };
+
+    const data = await fetchData("https://mern-ecomapp-1.onrender.com/v1/product/getProduct", options);
+    console.log("product data", data.dataproduct.result);
+    return data.dataproduct.result; 
+  } catch (error) {
+    return {error:error.message}; 
+  }
+});
+
+export default GetProduct;

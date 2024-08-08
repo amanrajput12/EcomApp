@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import GetProduct from '../Hooks/UseGetProduct.js'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllProducts } from '../Store/ProductSlice.js';
+
 import  {  List  } from 'react-content-loader'
 
   function App() {
@@ -18,9 +18,11 @@ import  {  List  } from 'react-content-loader'
 
  useEffect(()=>{
    console.log("useefect of app call");
-    GetProduct(token,dispatch,AllProducts).then(()=>{
-      setLoading(false)
-    })
+    // GetProduct(token,dispatch,AllProducts).then(()=>{
+    //   setLoading(false)
+    // })
+
+    dispatch(GetProduct(token))
  },[])
 
  const navigate = useNavigate()
@@ -36,7 +38,7 @@ import  {  List  } from 'react-content-loader'
  <div className="bg-white">
       <div className="mx-auto  max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-  {loading && 
+  {Products.loading && 
     <div className="flex flex-col">
    <MyCodeLoader  /> 
    <MyCodeLoader  /> 

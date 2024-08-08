@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import GetProductDetail from '../../Hooks/UseGetProductDetail.js'
 import AddtoCart from '../../Hooks/UseAddtoCart.js'
 import Loading from '../Utils/Loading.jsx';
+import { useDispatch } from 'react-redux';
 
 
 const ProductDetail = () => {
@@ -18,10 +19,12 @@ const ProductDetail = () => {
     const [imageCount,setImageCount]= useState(0)
     const token = Cookies.get('token');
     const user = Cookies.get('user');
-   
+    console.log("parmas",params);
+    
+    const dispatch = useDispatch()
    const navigate = useNavigate()
          useEffect(()=>{
-           GetProductDetail(token,params,setProductDetail)
+            dispatch(GetProductDetail({token,params}))
            
            console.log("Component mounted");
            let interval = setInterval(() => {

@@ -1,19 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
+import GetProduct from "../Hooks/UseGetProduct.js";
 
 
 
 const ProductSlice = createSlice({
     name:"Product",
     initialState:{
-        AppProduct:[]
+        AppProduct:[],
+        loading: false,
+        error: null,
     },
-    reducers:{
-        AllProducts:(state,action)=>{
-            state.AppProduct = action.payload
-        }
+    reducers:{ },
+    extraReducers:(builder)=>{
+        builder.addCase(GetProduct.pending,(state)=>{
+       state.loading = true;
+        state.error = null
+        })
+        .addCase(GetProduct.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.AppProduct =action.payload
+        })
+        .addCase(GetProduct.rejected,(state,action)=>{
+            state.loading = false;
+            state.error = action.error.message
+        })
     }
 })
 
-export const {AllProducts} = ProductSlice.actions
+
 
 export default ProductSlice.reducer
