@@ -38,6 +38,10 @@ const ProductDetailSlice = createSlice({
             state._id=action.payload[0]._id;
           
         })
+        .addCase(GetProductDetail.rejected,(state,action)=>{
+            state.loading=false;
+            state.error=action.error.message
+        })
     }
 })
 

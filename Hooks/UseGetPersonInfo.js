@@ -3,7 +3,7 @@ import fetchData from "../src/Utils/fetch.js"
 
 
 const GetPersonInfo = (token,user)=>{
-  console.log("on getting address info",user);
+
   const [Address,setAddress]= useState(null)
     useEffect(()=>{
         const options = {

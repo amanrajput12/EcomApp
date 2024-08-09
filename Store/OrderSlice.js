@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import GetOrder from "../Hooks/UseGetOrder.js";
+
+
 
 const OrderSlice = createSlice({
    name:"Order"  ,
    initialState:{
     address:null,
     paymentMethod:null,
-    orders:[]
+    orders:[],
+    loading:false,
+    error:null
+  
    },
    reducers:{
     addaddress: (state,action)=>{
@@ -23,6 +29,20 @@ const OrderSlice = createSlice({
         state.orders = action.payload
     }
 
+   },
+   extraReducers:(builder)=>{
+    builder.addCase(GetOrder.pending,(state)=>{
+       state.loading=true;
+       state.error= null
+    })
+    .addCase(GetOrder.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.orders=action.payload
+    })
+    .addCase(GetOrder.rejected,(state,action)=>{
+        state.loading= false;
+        state.error=action.error.message
+    })
    }
 })
  export const {addaddress,addpaymentMethod,orders} = OrderSlice.actions

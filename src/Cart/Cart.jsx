@@ -6,10 +6,7 @@ import RemoveCartData from '../../Hooks/UseRemoveCartData.js'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-import { addProduct } from '../../Store/CartSlice.js'
+import 'react-toastify/dist/ReactToastify.css'
 import ChangeCart from '../../Hooks/UseChangeCart.js'
 import Payment from '../../Hooks/UsePayment.js'
 import Loading from '../Utils/Loading.jsx'
@@ -32,32 +29,17 @@ const Cart = ({btn="Checkout"}) => {
 
 useEffect(()=>{
  getcard()
-     
- console.log("Component mounted");
- let interval = setInterval(() => {
-   const token = Cookies.get('token')
-   const user  = Cookies.get('user')
-   console.log("set interval",token,user);
-   if(!(token,user)){
-      navigate('/')
-   }
- }, 2000);
 
- return () => {
-   console.log("Clearing interval");
-   clearInterval(interval);
- }
 },[])
 
 async function getcard(){
-    GetCartData(token,user,dispatch,addProduct).then((data)=>setLoading(false))
-  console.log("cardata",cart.Products);
+   dispatch(GetCartData({token,user}))
   setCartBalance({
     totalAmount:cart.totalAmount,
    totalquantity:cart.totalQuantity
   })
 }
-console.log("cart used ",cartBalance);
+
     const handlecart = async()=>{
       console.log("cart click",btn);
       if(btn=="Checkout"){
@@ -79,7 +61,7 @@ console.log("cart used ",cartBalance);
   return (
     <div className='flex flex-col  '>
     <h1 className='text-2xl font-bold mb-2'>Cart</h1>
-    {loading &&  <Loading/>}
+    {cart.loading &&  <Loading/>}
        {  cart.Products && 
           
         cart?.Products?.map((data,i)=>
@@ -97,7 +79,7 @@ console.log("cart used ",cartBalance);
                             Qty
                           </label>
                           <select className='w-14'
-                            onChange={(e) =>  ChangeCart(token,data.product._id,user,e.target.value,toast,dispatch,addProduct) }
+                            onChange={(e) =>  dispatch(ChangeCart({token,id:data.product._id,user,quantity:e.target.value,toast})) }
                             value={data.quantity}
                           >
                             <option value="1">1</option>
@@ -108,7 +90,7 @@ console.log("cart used ",cartBalance);
                           </select>
           <button onClick={()=>{ 
           
-             RemoveCartData(token,user,data.product._id,toast,dispatch,addProduct)
+             dispatch(RemoveCartData({token,user,product:data.product._id,toast}))
             
           }
           } className='p-2 bg-zinc-700 rounded-xl text-white ml-10'>Remove</button>

@@ -2,36 +2,22 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from "js-cookie"
 import GetOrder from '../../Hooks/UseGetOrder.js'
-import { orders } from '../../Store/OrderSlice.js'
+
 import { useNavigate } from 'react-router-dom'
 import Loading from '../Utils/Loading.jsx'
 
 const Order = () => {
   const data = useSelector((store) => store.Order)
   const dispatch = useDispatch()
-  console.log("data on order", data);
+
       
   const token = Cookies.get("token")
   const user = Cookies.get("user")
   const navigate = useNavigate()
+ 
 useEffect(()=>{
 
-  GetOrder(token,user,dispatch,orders)
-
-  console.log("Component mounted");
-  let interval = setInterval(() => {
-    const token = Cookies.get('token')
-    const user  = Cookies.get('user')
-    console.log("set interval",token,user);
-    if(!(token,user)){
-       navigate('/')
-    }
-  }, 2000);
-
-  return () => {
-    console.log("Clearing interval");
-    clearInterval(interval);
-  }
+  dispatch(GetOrder({token,user}))
 },[])
 
 
@@ -39,7 +25,7 @@ useEffect(()=>{
     <div>
       My order
       {
-        !data.orders.order && <Loading/>
+        data.orders.loading && <Loading/>
       }
        {
         data?.orders?.order?.map((orderData) => {

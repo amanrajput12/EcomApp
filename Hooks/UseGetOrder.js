@@ -1,8 +1,9 @@
+import { createAsyncThunk } from "@reduxjs/toolkit"
 import fetchData from "../src/Utils/fetch.js"
 
 
-const GetOrder = (token,user,dispatch,orders)=>{
-
+const GetOrder = createAsyncThunk("data/fetchOrder", async(value)=>{
+ const {token,user} = value
     const options = {
         method:"POST",
         headers:{
@@ -16,10 +17,9 @@ const GetOrder = (token,user,dispatch,orders)=>{
  credentials: 'include'
        }
 
-       fetchData('https://mern-ecomapp-1.onrender.com/v1/order/get',options).then((data)=>{
-        dispatch(orders(data.dataproduct))
-        console.log("on order get",data)}
-    )
-}
+    const data = await    fetchData('https://mern-ecomapp-1.onrender.com/v1/order/get',options)
+
+    return data.dataproduct
+})
 
 export default GetOrder

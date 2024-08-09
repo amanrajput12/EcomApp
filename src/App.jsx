@@ -12,17 +12,15 @@ import  {  List  } from 'react-content-loader'
     const [loading, setLoading] = useState(true);
  
   const token = Cookies.get('token');
-  console.log('Token from cookie:', token);
   const dispatch = useDispatch()
   const Products = useSelector((store)=>store.Product)
 
  useEffect(()=>{
-   console.log("useefect of app call");
-    // GetProduct(token,dispatch,AllProducts).then(()=>{
-    //   setLoading(false)
-    // })
-
+ 
+  
+ if(Products.AppProduct.length==0){
     dispatch(GetProduct(token))
+ }
  },[])
 
  const navigate = useNavigate()
@@ -46,6 +44,11 @@ import  {  List  } from 'react-content-loader'
    <MyCodeLoader  /> 
    
    </div>
+   }
+   {Products.error && <div className='flex justify-center font-semibold'>Error On Fetching products
+    return null
+   </div>
+    
    }
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">

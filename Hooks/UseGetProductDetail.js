@@ -3,7 +3,7 @@ import fetchData from "../src/Utils/fetch.js";
 
 
 const GetProductDetail = createAsyncThunk("data/fetchProductDetail",async(value)=>{
-    console.log("token on thunk",value);
+
     const {params,token} = value
     
   const options = {
@@ -19,7 +19,7 @@ credentials: 'include'
     }; 
     
   const resp =  await    fetchData(`https://mern-ecomapp-1.onrender.com/v1/product/getProductDetail`,options)
-  console.log("resp",resp);
+
   
   return resp.dataproduct.data
    

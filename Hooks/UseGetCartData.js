@@ -1,13 +1,14 @@
 
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import fetchData from "../src/Utils/fetch.js"
 
 
 
 
-const GetCartData = async (token,user,dispatch,addProduct)=>{
+const GetCartData =  createAsyncThunk( "data/fetchCart",async (value)=>{
     
+    const {token,user} =value
     console.log("in the frontend ",user,token);
-   
    
         const options = {
             method: "POST",
@@ -20,13 +21,13 @@ const GetCartData = async (token,user,dispatch,addProduct)=>{
             }),
     credentials: 'include'
         }
-     return   fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartdata",options).then((data)=>{
-              if(data){
-                console.log("data on the reduxt",data.dataproduct.data);
-                dispatch(addProduct(data.dataproduct.data))
-              }
-            
-                  })
-                }
+    const data = await  fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartdata",options)
+
+
+                  if(data){
+                    console.log("data on the reduxt",data.dataproduct.data);
+                   return data.dataproduct.data
+                  }
+                })
 
 export default GetCartData

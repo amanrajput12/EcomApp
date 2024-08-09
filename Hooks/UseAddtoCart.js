@@ -1,7 +1,8 @@
+
 import fetchData from "../src/Utils/fetch.js";
 
 
-const AddtoCart = async(token,params,user,toast)=>{
+const AddtoCart =  async(token,params,user,toast)=>{
     const options = {
         method:"POST",
         headers:{
@@ -17,7 +18,8 @@ const AddtoCart = async(token,params,user,toast)=>{
     credentials: 'include'
        }
        
-       fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cart",options).then((data)=>{
+      const data = await   fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cart",options)
+
         console.log("data on added to cart",data.dataproduct.cart);
         if (data.dataproduct.message === "Proudct is already in the cart"){
             toast("Proudct is already in the car")
@@ -27,8 +29,6 @@ const AddtoCart = async(token,params,user,toast)=>{
         else if(data.dataproduct.message === "product added in the cart"){
           toast("product added in the cart")
         }
-        console.log("on added to cart",data.dataproduct.message)
-         })
 }
 
 export default AddtoCart
