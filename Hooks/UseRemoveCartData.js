@@ -31,4 +31,4 @@ if(data.dataproduct.message === "Product removed from the cart"){
 
 })
 
-export default RemoveCartData
+export default RemoveCartData   
