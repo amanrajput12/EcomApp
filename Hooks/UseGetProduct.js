@@ -12,7 +12,7 @@ const GetProduct = createAsyncThunk("data/fetchProduct", async (token) => {
       credentials: 'include',
     };
 
-    const data = await fetchData("https://mern-ecomapp-1.onrender.com/v1/product/getProduct", options);
+    const data = await fetchData("https://ecomapp-5huy.onrender.com/v1/product/getProduct", options);
     return data.dataproduct.result; 
   } catch (error) {
     return {error:error.message}; 

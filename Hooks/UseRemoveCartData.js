@@ -20,7 +20,7 @@ const  options ={
    }),
     credentials: 'include'
 }
- const data = await fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/removedata",options)
+ const data = await fetchData("https://ecomapp-5huy.onrender.com/v1/proudctdetail/removedata",options)
 
 if(data.dataproduct.message === "Product removed from the cart"){
   toast("product remove sucessfully")

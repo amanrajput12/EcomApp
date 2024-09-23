@@ -51,6 +51,18 @@ const route = createBrowserRouter([
 ])
 
 
+
+if(import.meta.env.VITE_ENV== "develpment"){
+
+  
+  console.log=()=>{}
+  console.debug=()=>{}
+  console.info=()=>{}
+  console.warn=()=>{}
+  console.error=()=>{}
+}
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={AppStore}>
 

@@ -17,7 +17,7 @@ const GetOrder = createAsyncThunk("data/fetchOrder", async(value)=>{
  credentials: 'include'
        }
 
-    const data = await    fetchData('https://mern-ecomapp-1.onrender.com/v1/order/get',options)
+    const data = await    fetchData('https://ecomapp-5huy.onrender.com/v1/order/get',options)
 
     return data.dataproduct
 })

@@ -56,7 +56,7 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
                   userShipping:orderdata.address,
                   token:token
                 }
-              const api = await axios.post("https://mern-ecomapp-1.onrender.com/v1/payment/verify-payment",paymentData)
+              const api = await axios.post("https://ecomapp-5huy.onrender.com/v1/payment/verify-payment",paymentData)
                     console.log("on payment confirm",api);
                     const {_id} = api?.data?.data
                     console.log("id of payment",_id);

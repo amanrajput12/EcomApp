@@ -18,7 +18,7 @@ const GetPersonInfo = (token,user)=>{
      credentials: 'include'
            }
 
-            fetchData("https://mern-ecomapp-1.onrender.com/v1/address/get",options).then((data)=>{
+            fetchData("https://ecomapp-5huy.onrender.com/v1/address/get",options).then((data)=>{
             console.log(" user info for get delivery",data);
         setAddress(data)
            })

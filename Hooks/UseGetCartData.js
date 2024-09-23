@@ -21,7 +21,7 @@ const GetCartData =  createAsyncThunk( "data/fetchCart",async (value)=>{
             }),
     credentials: 'include'
         }
-    const data = await  fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartdata",options)
+    const data = await  fetchData("https://ecomapp-5huy.onrender.com/v1/proudctdetail/cartdata",options)
 
 
                   if(data){
