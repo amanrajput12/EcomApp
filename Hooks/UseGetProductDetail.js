@@ -18,7 +18,7 @@ const GetProductDetail = createAsyncThunk("data/fetchProductDetail",async(value)
 credentials: 'include'
     }; 
     
-  const resp =  await    fetchData(`https://ecomapp-5huy.onrender.com/v1/product/getProductDetail`,options)
+  const resp =  await    fetchData(`https://mern-ecomapp-1.onrender.com/v1/product/getProductDetail`,options)
 
   
   return resp.dataproduct.data

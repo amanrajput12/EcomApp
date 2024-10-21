@@ -18,7 +18,7 @@ const ChangeCart = createAsyncThunk("data/fetchCartChange" ,async(value)=>{
            })
         }
 
-    const data =  await    fetchData("https://ecomapp-5huy.onrender.com/v1/proudctdetail/cartquantity",option)
+    const data =  await    fetchData("https://mern-ecomapp-1.onrender.com/v1/proudctdetail/cartquantity",option)
 
      console.log("data on update quantity",data)
      if(data.dataproduct.message === "Quantity change sucess" ){

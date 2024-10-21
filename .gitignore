@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+TestComp.jsx
 
 
 # Editor directories and files
