@@ -39,7 +39,7 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
             console.log("key for getting payment", import.meta.env.VITE_KEY)
                  
             var options = {
-              "key": import.meta.env.VITE_KEY,
+              "key": import.meta.env.VITE_KEY || "rzp_test_XtcP40Lq2VnmQI",
               "amount": amount*100, 
               "currency": "INR",
               "name": "Ecom ",
