@@ -36,15 +36,16 @@ const Payment = async(orderdata,cart,cartBalance,user,token,toast,dispatch,navig
             console.log("on payment respon",orderResponse);
     
             const {orderId,amount}= orderResponse.data
+            console.log("key for getting payment", import.meta.env.VITE_KEY)
                  
             var options = {
-              "key": import.meta.env.VITE_KEY, // Enter the Key ID generated from the Dashboard
-              "amount": amount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              "key": import.meta.env.VITE_KEY,
+              "amount": amount*100, 
               "currency": "INR",
               "name": "Ecom ",
               "description": "Test Transaction",
              
-              "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+              "order_id": orderId, 
               "handler":async function (response){
                 const paymentData = {
                   orderId:response.razorpay_payment_id,
